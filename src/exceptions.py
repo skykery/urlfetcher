@@ -1,0 +1,4 @@
+
+
+class RequestValidationException(Exception):
+    pass

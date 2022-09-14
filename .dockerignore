@@ -1,0 +1,6 @@
+.gitingore
+.git/
+.gitlab-ci.yml
+stack.yaml
+__pycache__/
+venv/
