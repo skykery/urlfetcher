@@ -18,15 +18,9 @@ services:
       - tors=25
 
   mongodb:
-    image: mongo:latest
+    image: mongo:5
     volumes:
       - mongo-data:/data/db
-
-
-networks:
-  default:
-    external:
-      name: m11s
 
 volumes:
   mongo-data:
