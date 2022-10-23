@@ -1,5 +1,5 @@
 import requests
-from models.bases import Backend
+from models.bases import Backend, MappedHTTPResponseDetails
 
 
 class HTTP(Backend):
@@ -7,8 +7,10 @@ class HTTP(Backend):
 
     @classmethod
     def get(cls, *args, **kwargs):
-        return requests.get(*args, **kwargs, **cls.extra_options)
+        response = requests.get(*args, **kwargs, **cls.extra_options)
+        return MappedHTTPResponseDetails(response)
 
     @classmethod
     def post(cls, *args, **kwargs):
-        return requests.post(*args, **kwargs, **cls.extra_options)
+        response = requests.post(*args, **kwargs, **cls.extra_options)
+        return MappedHTTPResponseDetails(response)

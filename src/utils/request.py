@@ -1,4 +1,5 @@
 from models.models import RequestModel
+from settings import DEFAULT_PROXY
 
 
 class RequestUtils:
@@ -12,7 +13,7 @@ class RequestUtils:
     @staticmethod
     def add_default_proxy(model: RequestModel):
         if not model.proxy:
-            model.proxy = 'http://rproxy:5566'
+            model.proxy = DEFAULT_PROXY
 
     @staticmethod
     def proxy_string_to_request_proxy(proxy):

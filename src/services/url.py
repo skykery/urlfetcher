@@ -1,8 +1,8 @@
 import logging
-from models.bases import MappedResponseDetails
-from models.models import RequestModel, ResponseModel
-from backends.http import HTTP
 from requests.models import Response
+from backends.browser import Browser
+from backends.http import HTTP
+from models.models import RequestModel, ResponseModel, Backends
 from parsers.html import HTMLParser
 from utils.decorators import retry
 from utils.request import RequestUtils
@@ -13,7 +13,10 @@ logger.setLevel(logging.DEBUG)
 
 
 class URLService(object):
-    backends = [HTTP]
+    backends = {
+        Backends.HTTP: HTTP,
+        Backends.BROWSER: Browser,
+    }
     utils = RequestUtils
     validators = RequestValidators
 
@@ -35,8 +38,6 @@ class URLService(object):
                 proxies=_model.proxy,
             )
 
-        response = Response()
-
         # TODO: fix validators, make them more generic
         # for validator in cls.validators.methods:
         #     getattr(cls.validators, validator)(model)
@@ -44,13 +45,11 @@ class URLService(object):
         for method in cls.utils.methods:
             getattr(cls.utils, method)(model)
 
-        for backend in cls.backends:
-            logger.info(model)
-            response: Response = get_response(_backend=backend, _model=model)
-            if response.status_code == 200:
-                break
+        backend = cls.backends[model.backend]
+        logger.info(model)
+        response: Response = get_response(_backend=backend, _model=model)
 
-        mapped_response = ResponseModel(response=MappedResponseDetails(response))
+        mapped_response = ResponseModel(response=response)
         mapped_response.css_selectors = HTMLParser(text=mapped_response.response.text).get_css_results(model=model)
 
         logger.info(mapped_response)

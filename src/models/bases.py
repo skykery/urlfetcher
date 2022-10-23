@@ -12,7 +12,7 @@ class Backend(ABC):
         raise NotImplemented
 
 
-class MappedResponseDetails(ResponseDetailsModel):
+class MappedHTTPResponseDetails(ResponseDetailsModel):
     def __init__(self, response: Response):
         r = response
         r.history.reverse()
