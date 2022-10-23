@@ -6,7 +6,13 @@ To run it locally
 `docker-compose -f stack.yaml up -d`
 
 I published a project [URLWorker](https://urlworker.techwetrust.com/) which is based on this microservice and you can try it yourself, for free of course.
-![URLWorker](https://i.imgur.com/jcXKTex.png)
+
+### Supports:
+ - Retries
+ - Free proxies by default
+ - Custom proxy
+ - CSS selectors
+ - JavaScript rendering
 
 You can make a free account on [https://urlworker.techwetrust.com/](https://urlworker.techwetrust.com/) or watch my tutorials on how to use it right on the [Examples](https://urlworker.techwetrust.com/examples/) section.
 
