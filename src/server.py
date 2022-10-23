@@ -31,6 +31,6 @@ async def request(key: str, data: RequestModel):
     return JSONResponse(response, background=task)
 
 
-from settings import custom_openapi
+from settings import add_custom_openapi
 
-app.openapi = custom_openapi
+app = add_custom_openapi(app)

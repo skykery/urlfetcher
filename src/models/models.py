@@ -8,6 +8,11 @@ class Methods(str, Enum):
     POST = 'post'
 
 
+class Backends(str, Enum):
+    HTTP = 'http'
+    BROWSER = 'browser'
+
+
 class CSSSelectorModel(BaseModel):
     selector: Union[str, None] = None
     attr: Union[str, None] = None
@@ -26,12 +31,13 @@ class CSSSelectorResultModel(CSSSelectorModel):
 
 class RequestModel(BaseModel):
     # https://fastapi.tiangolo.com/tutorial/schema-extra-example/
+    backend: Backends = Backends.HTTP
     method: Methods = Methods.GET
     url: str = ''
     headers: Optional[dict] = None
     data: Optional[dict] = None
     params: Optional[dict] = None
-    timeout: Optional[float] = 120
+    timeout: Optional[float] = 120  # max timeout
     proxy: Optional[str] = None
     retry: Optional[RetryModel] = RetryModel()
     # proxies: Optional[List[str]] = []
@@ -41,6 +47,7 @@ class RequestModel(BaseModel):
         schema_extra = {
             "example": {
                 "method": "get",
+                "backend": "http",
                 "url": "https://techwetrust.com",
                 "headers": {
                     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"},
